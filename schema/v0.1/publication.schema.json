@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:manual-publishing-contract:v0.1:publication",
+  "title": "Publication",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["status"],
+  "properties": {
+    "status": {"type": "string", "enum": ["draft", "generated", "validated", "published", "deprecated", "archived"]},
+    "generated_at": {"type": "string", "format": "date-time"},
+    "generator": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "version"],
+      "properties": {"name": {"type": "string", "minLength": 1}, "version": {"type": "string", "minLength": 1}}
+    },
+    "canonical_url": {"type": "string", "format": "uri"},
+    "cache": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mode"],
+      "properties": {"mode": {"type": "string", "enum": ["static", "page-cache", "none"]}}
+    }
+  }
+}
