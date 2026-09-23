@@ -4,7 +4,7 @@
   "title": "Source Document",
   "type": "object",
   "additionalProperties": false,
-  "required": ["source_id", "type", "title", "language", "version", "published_at", "file_name", "checksum"],
+  "required": ["source_id", "type", "title", "language", "version", "file_name", "checksum"],
   "properties": {
     "source_id": {"type": "string", "minLength": 1},
     "type": {"type": "string", "enum": ["pdf", "html", "docx", "markdown", "other"]},

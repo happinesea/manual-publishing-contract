@@ -1,4 +1,5 @@
 import json
+import shutil
 import tempfile
 import unittest
 from pathlib import Path
@@ -10,6 +11,16 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class RepositoryValidationTest(unittest.TestCase):
+    def validate_manual_example(self, manual):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            shutil.copytree(ROOT / "schema", root / "schema")
+            (root / "examples/v0.1/test").mkdir(parents=True)
+            (root / "examples/v0.1/test/manual.json").write_text(
+                json.dumps(manual), encoding="utf-8"
+            )
+            return validate_repository(root, required_files=())
+
     def test_repository_is_valid(self):
         self.assertEqual([], validate_repository(ROOT))
 
@@ -47,28 +58,16 @@ class RepositoryValidationTest(unittest.TestCase):
             errors = validate_repository(root, required_files=())
             self.assertTrue(any("manual_id" in error for error in errors), errors)
 
-    def test_schema_formats_are_enforced(self):
-        with tempfile.TemporaryDirectory() as directory:
-            root = Path(directory)
-            (root / "schema/v0.1").mkdir(parents=True)
-            (root / "examples/v0.1/minimal").mkdir(parents=True)
-            (root / "schema/v0.1/manual.schema.json").write_text(
-                json.dumps(
-                    {
-                        "$schema": "https://json-schema.org/draft/2020-12/schema",
-                        "$id": "https://example.invalid/manual.schema.json",
-                        "type": "object",
-                        "required": ["published_at"],
-                        "properties": {"published_at": {"type": "string", "format": "date"}},
-                    }
-                ),
-                encoding="utf-8",
-            )
-            (root / "examples/v0.1/minimal/manual.json").write_text(
-                json.dumps({"published_at": "not-a-date"}), encoding="utf-8"
-            )
-            errors = validate_repository(root, required_files=())
-            self.assertTrue(any("not a 'date'" in error for error in errors), errors)
+    def test_source_without_published_at_is_valid(self):
+        manual = json.loads((ROOT / "examples/v0.1/minimal/manual.json").read_text(encoding="utf-8"))
+        self.assertNotIn("published_at", manual["source"])
+        self.assertEqual([], self.validate_manual_example(manual))
+
+    def test_published_at_format_is_enforced_when_present(self):
+        manual = json.loads((ROOT / "examples/v0.1/minimal/manual.json").read_text(encoding="utf-8"))
+        manual["source"]["published_at"] = "not-a-date"
+        errors = self.validate_manual_example(manual)
+        self.assertTrue(any("not a 'date'" in error for error in errors), errors)
 
     def test_duplicate_schema_ids_are_rejected(self):
         with tempfile.TemporaryDirectory() as directory:
