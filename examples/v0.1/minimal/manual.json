@@ -1,0 +1,20 @@
+{
+  "contract_version": "0.1",
+  "manual_id": "example-controller-x1-v1-en",
+  "family_id": "example-controller-x1",
+  "title": "Example Controller X1 User Manual",
+  "language": "en",
+  "version": "1.0",
+  "source": {
+    "source_id": "example-controller-x1-en-v1",
+    "type": "pdf",
+    "title": "Example Controller X1 User Manual",
+    "language": "en",
+    "version": "1.0",
+    "file_name": "example-controller-x1-v1.pdf",
+    "checksum": {"algorithm": "sha256", "value": "1111111111111111111111111111111111111111111111111111111111111111"}
+  },
+  "sections": [{"section_id": "introduction", "title": "Introduction", "source": {"source_id": "example-controller-x1-en-v1", "pages": [1]}, "web": {"path": "/manuals/example-controller-x1/v1/introduction/"}}],
+  "publication": {"status": "draft"},
+  "provenance": {"source_ids": ["example-controller-x1-en-v1"], "evidence": []}
+}

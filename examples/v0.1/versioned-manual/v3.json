@@ -1,0 +1,6 @@
+{
+  "contract_version": "0.1", "manual_id": "example-controller-x1-v3-ja", "family_id": "example-controller-x1", "title": "Example Controller X1 マニュアル V3", "language": "ja-JP", "version": "3", "supersedes": "example-controller-x1-v2-ja",
+  "source": {"source_id": "example-x1-ja-v3", "type": "pdf", "title": "Example Controller X1 V3", "language": "ja-JP", "version": "3", "published_at": "2026-01-15", "file_name": "example-x1-v3.pdf", "checksum": {"algorithm": "sha256", "value": "3333333333333333333333333333333333333333333333333333333333333333"}},
+  "sections": [{"section_id": "setup", "title": "セットアップ", "source": {"source_id": "example-x1-ja-v3", "pages": [7]}, "web": {"path": "/manuals/example-x1/v3/setup/"}}],
+  "publication": {"status": "published", "generated_at": "2026-03-01T12:00:00Z", "generator": {"name": "example-builder", "version": "0.1.0"}, "canonical_url": "https://example.invalid/manuals/example-x1/v3/", "cache": {"mode": "static"}}, "provenance": {"source_ids": ["example-x1-ja-v3"], "evidence": []}
+}
