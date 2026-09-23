@@ -20,6 +20,10 @@ class RepositoryValidationTest(unittest.TestCase):
             self.assertIn("missing required file: spec/v0.1/en/evidence-contract.md", errors)
             self.assertIn("missing required file: examples/v0.1/pdf-to-web/manual.json", errors)
 
+    def test_ci_cache_uses_the_declared_dependency_file(self):
+        workflow = (ROOT / ".github/workflows/validate.yml").read_text(encoding="utf-8")
+        self.assertIn("cache-dependency-path: requirements-dev.txt", workflow)
+
     def test_invalid_example_is_rejected(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
